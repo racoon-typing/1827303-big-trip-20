@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Даниил Суворов](https://up.htmlacademy.ru/ecmascript/20/user/1827303).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Конотоп](https://htmlacademy.ru/profile/sineway).
 
 ---
 
