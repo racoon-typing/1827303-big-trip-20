@@ -165,7 +165,7 @@ export default class NewFormAddView {
 
   getElement() {
     if (!this.element) {
-      this.element = createElement(this.getElement());
+      this.element = createElement(this.getTemplate());
     }
 
     return this.element;
