@@ -13,7 +13,6 @@ export default class BoardPresenter {
 
   init() {
     render(new NewFilterView(), this.boardContainer);
-
     render(this.tripListComponent, this.boardContainer);
     render(new NewFormEditView(), this.tripListComponent.getElement());
 
