@@ -11,13 +11,13 @@
 // console.log(
 //   sum(2, 1)
 // );
-import NewFilterView from './view/new-filter-view';
 import NewSortView from './view/new-sort-view';
 import BoardPresenter from './presenter/board-presenter';
-import { render } from './render';
+import NewTripInfoView from './view/new-trip-info';
+import { RenderPosition, render } from './render';
 
 // Хедер
-const siteHeaderElement = document.querySelector('.page-header');
+const siteHeaderElement = document.querySelector('.trip-main');
 const siteHeaderSortElement = siteHeaderElement.querySelector('.trip-controls__filters');
 
 // Мейн
@@ -25,7 +25,7 @@ const siteMainElement = document.querySelector('.page-main');
 const siteMainFilterWrapper = siteMainElement.querySelector('.trip-events');
 const boardPresenter = new BoardPresenter({boardContainer: siteMainFilterWrapper});
 
+render(new NewTripInfoView, siteHeaderElement, RenderPosition.AFTERBEGIN);
 render(new NewSortView(), siteHeaderSortElement);
-render(new NewFilterView(), siteMainFilterWrapper);
 
 boardPresenter.init();
