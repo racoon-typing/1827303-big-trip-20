@@ -1,21 +1,31 @@
 import { createElement } from '../render.js';
+import {humanizePointDueDate, humanizeTimeDueDate, getDiffData} from '../utils.js';
 
-function createNewTripItemTemplate() {
+function createNewTripItemTemplate(item) {
+  const {dateFrom, dateTo,
+    // type, basePrice, isFavorite
+  } = item;
+
+  const date = humanizePointDueDate(dateFrom);
+  const timeFrom = humanizeTimeDueDate(dateFrom);
+  const timeTo = humanizeTimeDueDate(dateTo);
+  const timeDiff = getDiffData(dateFrom, dateTo);
+
   return (
     `<li class="trip-events__item">
     <div class="event">
-      <time class="event__date" datetime="2019-03-18">MAR 18</time>
+      <time class="event__date" datetime="2019-03-18">${date}</time>
       <div class="event__type">
         <img class="event__type-icon" width="42" height="42" src="img/icons/drive.png" alt="Event type icon">
       </div>
       <h3 class="event__title">Drive Chamonix</h3>
       <div class="event__schedule">
         <p class="event__time">
-          <time class="event__start-time" datetime="2019-03-18T14:30">14:30</time>
+          <time class="event__start-time" datetime="2019-03-18T14:30">${timeFrom}</time>
           &mdash;
-          <time class="event__end-time" datetime="2019-03-18T16:05">16:05</time>
+          <time class="event__end-time" datetime="2019-03-18T16:05">${timeTo}</time>
         </p>
-        <p class="event__duration">01H 35M</p>
+        <p class="event__duration">${timeDiff}</p>
       </div>
       <p class="event__price">
         &euro;&nbsp;<span class="event__price-value">160</span>
@@ -43,8 +53,12 @@ function createNewTripItemTemplate() {
 }
 
 export default class NewTripItemView {
+  constructor({item}) {
+    this.item = item;
+  }
+
   getTemplate() {
-    return createNewTripItemTemplate();
+    return createNewTripItemTemplate(this.item);
   }
 
   getElement() {
