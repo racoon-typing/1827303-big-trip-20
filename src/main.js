@@ -11,10 +11,11 @@
 // console.log(
 //   sum(2, 1)
 // );
-import NewSortView from './view/new-sort-view';
-import BoardPresenter from './presenter/board-presenter';
-import NewTripInfoView from './view/new-trip-info';
+
 import { RenderPosition, render } from './render';
+import NewSortView from './view/new-sort-view';
+import NewTripInfoView from './view/new-trip-info';
+import BoardPresenter from './presenter/board-presenter';
 import PointsModel from './model/point-model';
 
 // Хедер
