@@ -1,7 +1,7 @@
-import NewFormEditView from '../view/new-form-edit-view.js';
-import NewTripItemView from '../view/new-trip-item-view.js';
-import NewTripListView from '../view/new-trip-list-view.js';
-import NewFilterView from '../view/new-filter-view.js';
+import NewFormEditView from '../views/new-form-edit-view.js';
+import NewTripItemView from '../views/new-trip-item-view.js';
+import NewTripListView from '../views/new-trip-list-view.js';
+import NewFilterView from '../views/new-filter-view.js';
 import {render} from '../render.js';
 
 export default class BoardPresenter {
