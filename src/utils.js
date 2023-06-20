@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 import {escape as escapeHtml} from 'he';
 
 class SafeHtml extends String {}
@@ -31,6 +29,9 @@ export {SafeHtml, html};
 
 
 // Мой код
+
+import dayjs from 'dayjs';
+
 const DATE_FORMAT = 'MMM D';
 const TIME_FORMAT = 'hh:mm';
 
