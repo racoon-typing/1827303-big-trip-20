@@ -3,39 +3,21 @@ import './views/add-view.js';
 import './views/filter-view.js';
 import './views/sort-view.js';
 import './views/list-view.js';
+
 import AppModel from './models/app-model.js';
 
+import BriefPresenter from './presenters/brief-presenter.js';
+import AddPresenter from './presenters/add-presenter.js';
+import FilterPresentor from './presenters/filter-presentor.js';
+import SortPresenter from './presenters/sort-presenter.js';
+import ListPresentor from './presenters/list-presentor.js';
+
+
 const appModel = new AppModel();
-console.log(appModel.getPoints());
 
-/**
- * @type {BriefView}
- */
-const briefView = document.querySelector('brief-view');
+new BriefPresenter(document.querySelector('brief-view'));
+new AddPresenter(document.querySelector('add-view'));
+new FilterPresentor(document.querySelector('filter-view'));
+new SortPresenter(document.querySelector('sort-view'));
+new ListPresentor(document.querySelector('list-view'), appModel);
 
-/**
- * @type {AddView}
-*/
-const addView = document.querySelector('add-view');
-
-/**
- * @type {FilterView}
-*/
-const filterView = document.querySelector('filter-view');
-
-/**
- * @type {SortView}
-*/
-const sortView = document.querySelector('sort-view');
-
-/**
- * @type {ListView}
-*/
-const listView = document.querySelector('list-view');
-
-
-briefView.render();
-addView.render();
-filterView.render();
-sortView.render();
-listView.render();
