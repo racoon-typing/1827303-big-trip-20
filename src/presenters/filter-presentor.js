@@ -1,7 +1,7 @@
 import Presenter from './presenter.js';
 
 /**
- * @extends {Presenter<filter-presentorView>}
+ * @extends {Presenter<FilterView>}
  */
 class FilterPresentor extends Presenter {
   /**
