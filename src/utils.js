@@ -1,4 +1,35 @@
+import dayjs from 'dayjs';
+import durationPlugin from 'dayjs/plugin/duration.js';
 import {escape as escapeHtml} from 'he';
+
+dayjs.extend(durationPlugin);
+
+/**
+ * @param {string} dateTime
+ * @return {string}
+ */
+function formatDate(dateTime) {
+  return dayjs(dateTime).format('MMM D');
+}
+
+/**
+ * @param {string} dateTime
+ * @return {string}
+ */
+function formatTime(dateTime) {
+  return dayjs(dateTime).format('HH:mm');
+}
+
+/**
+ * @param {string} startDateTime
+ * @param {string} endDateTime
+ * @return {string}
+ */
+function formatDuration(startDateTime, endDateTime) {
+  const ms = dayjs(endDateTime).diff(startDateTime);
+
+  return dayjs.duration(ms).format('HH[h] mm[m]');
+}
 
 class SafeHtml extends String {}
 
@@ -25,55 +56,4 @@ function html(strings, ...values) {
   return new SafeHtml(result);
 }
 
-export {SafeHtml, html};
-
-
-// Мой код
-
-import dayjs from 'dayjs';
-
-const DATE_FORMAT = 'MMM D';
-const TIME_FORMAT = 'hh:mm';
-
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-// Функция для получения даты в формате: "JUL 10"
-function humanizePointDueDate(dueDate) {
-  return dueDate ? dayjs(dueDate).format(DATE_FORMAT) : '';
-}
-
-// Функция для получения даты: в формате "02:55"
-function humanizeTimeDueDate(dueDate) {
-  return dueDate ? dayjs(dueDate).format(TIME_FORMAT) : '';
-}
-
-// Функция для получения разницы между датой до/после
-function getDiffData(dueDate1, dueDate2) {
-  const firstDate = dayjs(dueDate1);
-  const secondDate = dayjs(dueDate2);
-
-  // Разница в минутах
-  const difference = secondDate.diff(firstDate, 'minute');
-
-  // Дата: разница между от и до
-  const hours = Math.floor(difference / 60);
-  const minutes = Math.floor(difference) - (hours * 60);
-
-  // Форматированная дата: разница между от и до
-  const hoursFormated = hours.toString().padStart(2, '0');
-  const minutesFormated = minutes.toString().padStart(2, '0');
-
-  // Форматированная дата: 01H 10M или 10M
-  let differenceTimeFormated;
-  if (hours === 0) {
-    differenceTimeFormated = `${minutesFormated}M`;
-  } else {
-    differenceTimeFormated = `${hoursFormated}H ${minutesFormated}M`;
-  }
-
-  return differenceTimeFormated;
-}
-
-export { getRandomArrayElement, humanizePointDueDate, humanizeTimeDueDate, getDiffData };
+export { formatDate, formatTime, formatDuration, SafeHtml, html };
