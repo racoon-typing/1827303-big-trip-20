@@ -70,9 +70,9 @@ class CardView extends View {
     return html`
       <div class="event__schedule">
         <p class="event__time">
-          <time class="event__start-time" datetime="2019-03-18T10:30">${point.startDate}</time>
+          <time class="event__start-time" datetime="${point.startDateTime}">${point.startTime}</time>
           —
-          <time class="event__end-time" datetime="2019-03-18T11:00">${point.endTime}</time>
+          <time class="event__end-time" datetime="${point.endDateTime}">${point.endTime}</time>
         </p>
         <p class="event__duration">${point.duration}</p>
       </div>
