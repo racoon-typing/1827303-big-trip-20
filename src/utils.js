@@ -1,25 +1,59 @@
 import dayjs from 'dayjs';
+import durationPlugin from 'dayjs/plugin/duration.js';
+import {escape as escapeHtml} from 'he';
 
-const DATE_FORMAT = 'MMM D';
-const TIME_FORMAT = 'hh mm';
+dayjs.extend(durationPlugin);
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
+/**
+ * @param {string} dateTime
+ * @return {string}
+ */
+function formatDate(dateTime) {
+  return dayjs(dateTime).format('MMM D');
 }
 
-function humanizePointDueDate(dueDate) {
-  return dueDate ? dayjs(dueDate).format(DATE_FORMAT) : '';
+/**
+ * @param {string} dateTime
+ * @return {string}
+ */
+function formatTime(dateTime) {
+  return dayjs(dateTime).format('HH:mm');
 }
 
-function humanizeTimeDueDate(dueDate) {
-  return dueDate ? dayjs(dueDate).format(TIME_FORMAT) : '';
+/**
+ * @param {string} startDateTime
+ * @param {string} endDateTime
+ * @return {string}
+ */
+function formatDuration(startDateTime, endDateTime) {
+  const ms = dayjs(endDateTime).diff(startDateTime);
+
+  return dayjs.duration(ms).format('HH[h] mm[m]');
 }
 
-function getDiffData(dueDate1, dueDate2) {
-  const firstDate = dayjs(dueDate1);
-  const secondDate = dayjs(dueDate2);
+class SafeHtml extends String {}
 
-  return secondDate.diff(firstDate);
+/**
+ * @param {TemplateStringsArray} strings
+ * @param {...any} values
+ * @return {SafeHtml}
+ */
+function html(strings, ...values) {
+  const result = strings.reduce((before, after, index) => {
+    const value = values[index - 1];
+
+    if (Array.isArray(value) && value.every((it) => it instanceof SafeHtml)) {
+      return before + value.join('') + after;
+    }
+
+    if (!(value instanceof SafeHtml)) {
+      return before + escapeHtml(String(value)) + after;
+    }
+
+    return before + value + after;
+  });
+
+  return new SafeHtml(result);
 }
 
-export {getRandomArrayElement, humanizePointDueDate, humanizeTimeDueDate, getDiffData};
+export { formatDate, formatTime, formatDuration, SafeHtml, html };
