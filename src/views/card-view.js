@@ -5,6 +5,25 @@ import {html} from '../utils.js';
  * @extends {View<PointViewState>}
  */
 class CardView extends View {
+  // #handleClick = null;
+
+  // /**
+  //  * @param {*} onClick Объект с настройками для слушателя на клик
+  //  */
+  // constructor({onClick}) {
+  //   super();
+  //   this.#handleClick = onClick;
+  //   // this.element.addEventListener('click', this.#clickHandler);
+  // }
+
+  // /**
+  //  * @param {*} evt
+  //  */
+  // #clickHandler = (evt) => {
+  //   evt.preventDefault();
+  //   this.#handleClick();
+  // };
+
   /**
    * @override
    */
