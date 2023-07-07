@@ -1,27 +1,24 @@
 import View from './view.js';
-import {html} from '../utils.js';
+import { html } from '../utils.js';
 
 /**
  * @extends {View<PointViewState>}
  */
 class CardView extends View {
-
-  // /**
-  //  * @param {*} onClick Объект с настройками для слушателя на клик
-  //  */
   constructor() {
     super();
-    this.addEventListener('click', this.#handleClick);
+
+    this.addEventListener('click', this.handleClick);
   }
 
   /**
-   * @param {MouseEvent & {target: Element}} evt
-   */
-  #handleClick = (evt) => {
-    if (evt.target.closest('.event__rollup-btn')) {
+    * @param {MouseEvent & {target: Element}} event
+    */
+  handleClick(event) {
+    if (event.target.closest('.event__rollup-btn')) {
       this.notify('open');
     }
-  };
+  }
 
   /**
    * @override

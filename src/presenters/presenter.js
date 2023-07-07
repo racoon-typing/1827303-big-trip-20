@@ -12,10 +12,10 @@ class Presenter {
     this.view = view;
     this.model = model;
 
-    this.addEventListners();
+    this.addEventListeners();
     this.updateView();
 
-    window.addEventListener('popstate', () => this.updateView);
+    window.addEventListener('popstate', () => this.updateView());
   }
 
   updateView() {
@@ -33,7 +33,7 @@ class Presenter {
   /**
    * @abstract
    */
-  addEventListners() {}
+  addEventListeners() {}
 
   /**
    * @param {Object<string, string>} params

@@ -1,4 +1,4 @@
-import {formatDate, formatDuration, formatTime} from '../utils.js';
+import { formatDate, formatDuration, formatTime } from '../utils.js';
 import Presenter from './presenter.js';
 
 /**
@@ -13,15 +13,14 @@ class ListPresentor extends Presenter {
     const points = this.model.getPoints();
     const items = points.map(this.createPointViewState, this);
 
-    // console.log(items[0]);
-    return {items};
+    return { items };
   }
 
   /**
    * @param {Point} point
    * @return {PointViewState}
    */
-  createPointViewState(point, index) {
+  createPointViewState(point) {
     const offerGroups = this.model.getOfferGroups();
     const types = offerGroups.map((it) => ({
       value: it.type,
@@ -39,6 +38,11 @@ class ListPresentor extends Presenter {
       isSelected: point.offerIds.includes(it.id),
     }));
 
+    /**
+     * @type {UrlParams}
+     */
+    const urlParams = this.getUrlParams();
+
     return {
       id: point.id,
       types,
@@ -52,24 +56,25 @@ class ListPresentor extends Presenter {
       basePrice: point.basePrice,
       offers,
       isFavorite: point.isFavorite,
-      isEditable: index === 5,
+      isEditable: point.id === urlParams.edit,
     };
   }
 
   /**
    * @override
    */
-  addEventListners() {
+  addEventListeners() {
     /**
-     * @param {CustomEvent & {target: CardView}} evt
+     * @param {CustomEvent & {target: CardView}} event
      */
-    const handleViewOpen = (evt) => {
+    const handleViewOpen = (event) => {
       /**
        * @type {UrlParams}
        */
       const urlParams = this.getUrlParams();
 
-      urlParams.edit = evt.target.state.id;
+      urlParams.edit = event.target.state.id;
+
       this.setUrlParams(urlParams);
     };
 
