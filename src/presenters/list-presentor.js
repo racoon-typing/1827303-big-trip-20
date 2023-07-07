@@ -55,6 +55,26 @@ class ListPresentor extends Presenter {
       isEditable: index === 5,
     };
   }
+
+  /**
+   * @override
+   */
+  addEventListners() {
+    /**
+     * @param {CustomEvent & {target: CardView}} evt
+     */
+    const handleViewOpen = (evt) => {
+      /**
+       * @type {UrlParams}
+       */
+      const urlParams = this.getUrlParams();
+
+      urlParams.edit = evt.target.state.id;
+      this.setUrlParams(urlParams);
+    };
+
+    this.view.addEventListener('open', handleViewOpen);
+  }
 }
 
 export default ListPresentor;
