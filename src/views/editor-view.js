@@ -6,6 +6,21 @@ import {html} from '../utils.js';
  * @extends {View<PointViewState>}
  */
 class EditorView extends View {
+  constructor() {
+    super();
+
+    this.addEventListener('click', this.handleClick);
+  }
+
+  /**
+   * @param {MouseEvent & {target: Element}} evt
+   */
+  handleClick(evt) {
+    if (evt.target.closest('.event__rollup-btn')) {
+      this.notify('close');
+    }
+  }
+
   /**
    * @override
    */
@@ -29,7 +44,6 @@ class EditorView extends View {
       </form>
     `;
   }
-
 
   /**
    * @return {SafeHtml}
@@ -143,7 +157,7 @@ class EditorView extends View {
   createCloseButtonHtml() {
     return html`
       <button class="event__rollup-btn" type="button">
-        <span class="visually-hidden">Open event</span>
+        <span class="visually-hidden">Close event</span>
       </button>
     `;
   }

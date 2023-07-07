@@ -74,11 +74,18 @@ class ListPresentor extends Presenter {
       const urlParams = this.getUrlParams();
 
       urlParams.edit = event.target.state.id;
+      this.setUrlParams(urlParams);
+    };
 
+    const handleViewClose = () => {
+      const urlParams = this.getUrlParams();
+
+      delete urlParams.edit;
       this.setUrlParams(urlParams);
     };
 
     this.view.addEventListener('open', handleViewOpen);
+    this.view.addEventListener('close', handleViewClose);
   }
 }
 
