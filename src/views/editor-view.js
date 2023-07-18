@@ -4,8 +4,41 @@ import {html} from '../utils.js';
 
 /**
  * @extends {View<PointViewState>}
+ * @implements {EventListenerObject}
  */
 class EditorView extends View {
+  constructor() {
+    super();
+
+    this.addEventListener('click', this.handleClick);
+  }
+
+  connectedCallback() {
+    document.addEventListener('keydown', this);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this);
+  }
+
+  /**
+   * @param {MouseEvent & {target: Element}} evt
+   */
+  handleClick(evt) {
+    if (evt.target.closest('.event__rollup-btn')) {
+      this.notify('close');
+    }
+  }
+
+  /**
+   * @param {KeyboardEvent} evt
+   */
+  handleEvent(evt) {
+    if (evt.key === 'Escape') {
+      this.notify('close');
+    }
+  }
+
   /**
    * @override
    */
@@ -29,7 +62,6 @@ class EditorView extends View {
       </form>
     `;
   }
-
 
   /**
    * @return {SafeHtml}
@@ -143,7 +175,7 @@ class EditorView extends View {
   createCloseButtonHtml() {
     return html`
       <button class="event__rollup-btn" type="button">
-        <span class="visually-hidden">Open event</span>
+        <span class="visually-hidden">Close event</span>
       </button>
     `;
   }

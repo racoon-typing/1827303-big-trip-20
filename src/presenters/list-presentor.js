@@ -1,4 +1,4 @@
-import {formatDate, formatDuration, formatTime} from '../utils.js';
+import { formatDate, formatDuration, formatTime } from '../utils.js';
 import Presenter from './presenter.js';
 
 /**
@@ -13,15 +13,14 @@ class ListPresentor extends Presenter {
     const points = this.model.getPoints();
     const items = points.map(this.createPointViewState, this);
 
-    // console.log(items[0]);
-    return {items};
+    return { items };
   }
 
   /**
    * @param {Point} point
    * @return {PointViewState}
    */
-  createPointViewState(point, index) {
+  createPointViewState(point) {
     const offerGroups = this.model.getOfferGroups();
     const types = offerGroups.map((it) => ({
       value: it.type,
@@ -39,6 +38,11 @@ class ListPresentor extends Presenter {
       isSelected: point.offerIds.includes(it.id),
     }));
 
+    /**
+     * @type {UrlParams}
+     */
+    const urlParams = this.getUrlParams();
+
     return {
       id: point.id,
       types,
@@ -52,8 +56,36 @@ class ListPresentor extends Presenter {
       basePrice: point.basePrice,
       offers,
       isFavorite: point.isFavorite,
-      isEditable: index === 5,
+      isEditable: point.id === urlParams.edit,
     };
+  }
+
+  /**
+   * @override
+   */
+  addEventListeners() {
+    /**
+     * @param {CustomEvent & {target: CardView}} event
+     */
+    const handleViewOpen = (event) => {
+      /**
+       * @type {UrlParams}
+       */
+      const urlParams = this.getUrlParams();
+
+      urlParams.edit = event.target.state.id;
+      this.setUrlParams(urlParams);
+    };
+
+    const handleViewClose = () => {
+      const urlParams = this.getUrlParams();
+
+      delete urlParams.edit;
+      this.setUrlParams(urlParams);
+    };
+
+    this.view.addEventListener('open', handleViewOpen);
+    this.view.addEventListener('close', handleViewClose);
   }
 }
 
