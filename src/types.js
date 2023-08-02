@@ -12,7 +12,6 @@
  * @typedef {import('./views/view.js').default} View
  */
 
-
 /**
  * @typedef BriefViewState
  * @prop {string} places
@@ -24,6 +23,7 @@
  * @typedef AddViewState
  * @prop {boolean} isDisabled
  */
+
 
 /**
  * @typedef FilterViewState
@@ -39,6 +39,23 @@
 
 /**
  * @typedef {'everything' | 'future' | 'present' | 'past'} FilterType
+ */
+
+
+/**
+ * @typedef SortViewState
+ * @prop {Array<SortItemViewState>} items
+ */
+
+/**
+ * @typedef SortItemViewState
+ * @prop {SortType} value
+ * @prop {boolean} isSelected
+ * @prop {boolean} isDisabled
+ */
+
+/**
+ * @typedef {'day' | 'event' | 'time' | 'price' | 'offers'} SortType
  */
 
 /**
