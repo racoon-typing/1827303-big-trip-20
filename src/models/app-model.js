@@ -4,16 +4,15 @@ import destination from '../data/destinations.json';
 import offerGroups from '../data/offers.json';
 
 class AppModel extends Model {
-  #points;
-  #destination;
-  #offerGroups;
+  #points = points;
+  #destination = destination;
+  #offerGroups = offerGroups;
 
-  constructor() {
-    super();
-
-    this.#points = points;
-    this.#destination = destination;
-    this.#offerGroups = offerGroups;
+  /**
+   * @type {Record<SortType, (a: Point, b: Point) => number>}
+   */
+  #sortCallbackMap = {
+    
   }
 
   /**
