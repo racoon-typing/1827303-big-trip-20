@@ -20,7 +20,22 @@ class SortPresenter extends Presenter {
       isDisabled: it === 'event' || it === 'offers',
     }));
 
-    return {items};
+    return { items };
+  }
+
+  /**
+   * @override
+   */
+  addEventListeners() {
+    const handleSortList = (event) => {
+      if (event.target.tagName !== 'LABEL') {
+        return;
+      }
+
+
+    };
+
+    this.view.addEventListener('change', handleSortList);
   }
 }
 

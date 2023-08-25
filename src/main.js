@@ -15,6 +15,7 @@ import ListPresentor from './presenters/list-presentor.js';
 
 const appModel = new AppModel();
 
+
 new BriefPresenter(document.querySelector('brief-view'));
 new AddPresenter(document.querySelector('add-view'));
 new FilterPresentor(document.querySelector('filter-view'));
