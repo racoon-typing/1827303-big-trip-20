@@ -14,7 +14,6 @@ class SortPresenter extends Presenter {
      */
     const {sort = 'day'} = this.getUrlParams();
 
-
     /**
      * @type {Array<SortType>}
      */
