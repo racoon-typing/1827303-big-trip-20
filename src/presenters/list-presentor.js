@@ -1,4 +1,5 @@
 import { formatDate, formatDuration, formatTime } from '../utils.js';
+import EditorView from '../views/editor-view.js';
 import Presenter from './presenter.js';
 
 /**
@@ -69,40 +70,48 @@ class ListPresentor extends Presenter {
    * @override
    */
   addEventListeners() {
+    this.view.addEventListener('open', this.handleViewOpen.bind(this));
+    this.view.addEventListener('close', this.handleViewClose.bind(this));
+    this.view.addEventListener('favorite', this.handleViewFavorite.bind(this));
+    this.view.addEventListener('edit', this.handleViewEdit.bind(this));
+  }
+
+  /**
+   * @param {CustomEvent & {target: CardView}} event
+   */
+  handleViewOpen(event) {
     /**
-     * @param {CustomEvent & {target: CardView}} event
+     * @type {UrlParams}
      */
-    const handleViewOpen = (event) => {
-      /**
-       * @type {UrlParams}
-       */
-      const urlParams = this.getUrlParams();
+    const urlParams = this.getUrlParams();
 
-      urlParams.edit = event.target.state.id;
-      this.setUrlParams(urlParams);
-    };
+    urlParams.edit = event.target.state.id;
+    this.setUrlParams(urlParams);
+  }
 
-    const handleViewClose = () => {
-      const urlParams = this.getUrlParams();
+  handleViewClose() {
+    const urlParams = this.getUrlParams();
 
-      delete urlParams.edit;
-      this.setUrlParams(urlParams);
-    };
+    delete urlParams.edit;
+    this.setUrlParams(urlParams);
+  }
 
-    /**
-     * @param {CustomEvent & {target: CardView}} event
-     */
-    const handleViewFavorite = (event) => {
-      const card = event.target;
-      const point = card.state;
+  /**
+   * @param {CustomEvent & {target: CardView}} event
+   */
+  handleViewFavorite(event) {
+    const card = event.target;
+    const point = card.state;
 
-      point.isFavorite = !point.isFavorite;
-      card.render();
-    };
+    point.isFavorite = !point.isFavorite;
+    card.render();
+  }
 
-    this.view.addEventListener('open', handleViewOpen);
-    this.view.addEventListener('close', handleViewClose);
-    this.view.addEventListener('favorite', handleViewFavorite);
+  /**
+   * @param {CustomEvent<HTMLInputElement> & {target: EditorView}} event
+   */
+  handleViewEdit(event) {
+    console.log(event);
   }
 }
 

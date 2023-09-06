@@ -11,6 +11,7 @@ class EditorView extends View {
     super();
 
     this.addEventListener('click', this.handleClick);
+    this.addEventListener('input', this.handleInput);
   }
 
   connectedCallback() {
@@ -37,6 +38,13 @@ class EditorView extends View {
     if (evt.key === 'Escape') {
       this.notify('close');
     }
+  }
+
+  /**
+   * @param {InputEvent} evt
+   */
+  handleInput(evt) {
+    this.notify('edit', evt.target);
   }
 
   /**
