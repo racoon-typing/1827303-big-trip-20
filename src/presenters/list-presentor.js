@@ -118,14 +118,25 @@ class ListPresentor extends Presenter {
     console.log(field.name);
 
     switch (field.name) {
-      case 'event-destination':
+      case 'event-type': {
+        const offerGroups = this.model.getOfferGroups();
+        const {offers} = offerGroups.find((it) => it.type === field.value);
+        point.offers = offers;
+        point.types.forEach((it) => {
+          it.isSelected = it.value === field.value;
+        });
+        editor.renderTypeAndRelativeField();
+        break;
+      }
+      case 'event-destination': {
+        const name = field.value.trim();
+
         point.destinations.forEach((it) => {
-          it.isSelected = it.name === field.value;
+          it.isSelected = it.name === name;
         });
         editor.renderDestination();
         break;
-      // case 'event-type':
-      //   break;
+      }
     }
   }
 }
