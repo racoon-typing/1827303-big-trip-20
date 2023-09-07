@@ -111,7 +111,22 @@ class ListPresentor extends Presenter {
    * @param {CustomEvent<HTMLInputElement> & {target: EditorView}} event
    */
   handleViewEdit(event) {
-    console.log(event);
+    const editor = event.target;
+    const field = event.detail;
+    const point = editor.state;
+
+    console.log(field.name);
+
+    switch (field.name) {
+      case 'event-destination':
+        point.destinations.forEach((it) => {
+          it.isSelected = it.name === field.value;
+        });
+        editor.render();
+        break;
+      // case 'event-type':
+      //   break;
+    }
   }
 }
 
