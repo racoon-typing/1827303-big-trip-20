@@ -122,7 +122,7 @@ class ListPresentor extends Presenter {
         point.destinations.forEach((it) => {
           it.isSelected = it.name === field.value;
         });
-        editor.render();
+        editor.renderDestination();
         break;
       // case 'event-type':
       //   break;
