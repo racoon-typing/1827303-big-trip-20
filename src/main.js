@@ -3,6 +3,7 @@ import './views/add-view.js';
 import './views/filter-view.js';
 import './views/sort-view.js';
 import './views/list-view.js';
+import './views/placeholder-view.js';
 
 import AppModel from './models/app-model.js';
 
@@ -11,6 +12,7 @@ import AddPresenter from './presenters/add-presenter.js';
 import FilterPresentor from './presenters/filter-presentor.js';
 import SortPresenter from './presenters/sort-presenter.js';
 import ListPresentor from './presenters/list-presentor.js';
+import PlaceholderPresenter from './presenters/placeholder-presenter.js';
 
 
 const appModel = new AppModel();
@@ -21,4 +23,9 @@ new AddPresenter(document.querySelector('add-view'));
 new FilterPresentor(document.querySelector('filter-view'));
 new SortPresenter(document.querySelector('sort-view'));
 new ListPresentor(document.querySelector('list-view'), appModel);
+new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
 
+// * Everthing – 'Click New Event to create your first point'
+//               * Past — 'There are no past events now';
+//               * Present — 'There are no present events now';
+//               * Future — 'There are no future events now'.
