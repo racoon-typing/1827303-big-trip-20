@@ -86,6 +86,12 @@
  */
 
 /**
+ * @typedef PlaceholderViewStateViewState
+ * @prop {string} text
+ * @prop {Boolean} isHidden
+ */
+
+/**
  * @typedef UrlParams
  * @prop {string} [edit]
  * @prop {FilterType} [filter]

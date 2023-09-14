@@ -24,8 +24,3 @@ new FilterPresentor(document.querySelector('filter-view'));
 new SortPresenter(document.querySelector('sort-view'));
 new ListPresentor(document.querySelector('list-view'), appModel);
 new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
-
-// * Everthing – 'Click New Event to create your first point'
-//               * Past — 'There are no past events now';
-//               * Present — 'There are no present events now';
-//               * Future — 'There are no future events now'.
