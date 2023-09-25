@@ -67,6 +67,23 @@ class ListPresentor extends Presenter {
   }
 
   /**
+   * @param {PointViewState} point
+   * @return {Point}
+   */
+  serealizePointViewState(point) {
+    return {
+      id: point.id,
+      type: point.types.find((it) => it.isSelected).value,
+      destinationId: point.destinations.find((it) => it.isSelected)?.id,
+      startDateTime: point.startDateTime,
+      endDateTime: point.endDateTime,
+      basePrice: point.basePrice,
+      offerIds: point.offers.filter((it) => it.isSelected).map((it) => it.id),
+      isFavorite: point.isFavorite,
+    };
+  }
+
+  /**
    * @override
    */
   addEventListeners() {
@@ -74,6 +91,7 @@ class ListPresentor extends Presenter {
     this.view.addEventListener('close', this.handleViewClose.bind(this));
     this.view.addEventListener('favorite', this.handleViewFavorite.bind(this));
     this.view.addEventListener('edit', this.handleViewEdit.bind(this));
+    this.view.addEventListener('safe', this.handleViewSafe.bind(this));
   }
 
   /**
@@ -104,6 +122,7 @@ class ListPresentor extends Presenter {
     const point = card.state;
 
     point.isFavorite = !point.isFavorite;
+    this.model.updatePoint(this.serealizePointViewState(point));
     card.render();
   }
 
@@ -115,12 +134,10 @@ class ListPresentor extends Presenter {
     const field = event.detail;
     const point = editor.state;
 
-    console.log(field.name);
-
     switch (field.name) {
       case 'event-type': {
         const offerGroups = this.model.getOfferGroups();
-        const {offers} = offerGroups.find((it) => it.type === field.value);
+        const { offers } = offerGroups.find((it) => it.type === field.value);
         point.offers = offers;
         point.types.forEach((it) => {
           it.isSelected = it.value === field.value;
@@ -137,7 +154,36 @@ class ListPresentor extends Presenter {
         editor.renderDestination();
         break;
       }
+      case 'event-start-time': {
+        point.startDateTime = field.value;
+        break;
+      }
+      case 'event-end-time': {
+        point.endDateTime = field.value;
+        break;
+      }
+      case 'event-price': {
+        point.basePrice = Number(field.value);
+        break;
+      }
+      case 'event-offer': {
+        const offer = point.offers.find((it) => it.id === field.value);
+        offer.isSelected = !offer.isSelected;
+        break;
+      }
     }
+  }
+
+  /**
+   * @param {CustomEvent<HTMLInputElement> & {target: EditorView}} event
+   */
+  handleViewSafe(event) {
+    const editor = event.target;
+    const point = editor.state;
+
+    event.preventDefault();
+    this.model.updatePoint(this.serealizePointViewState(point));
+    this.handleViewClose();
   }
 }
 

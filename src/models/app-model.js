@@ -8,14 +8,14 @@ class AppModel extends Model {
   #destination = destination;
   #offerGroups = offerGroups;
 
-
   /**
    * @type {Record<FilterType, (it: Point) => Boolean>}
    */
   #filterCallbackMap = {
     everything: () => true,
     future: (it) => Date.parse(it.startDateTime) > Date.now(),
-    present: (it) => !this.#filterCallbackMap.past(it) && !this.#filterCallbackMap.future(it),
+    present: (it) =>
+      !this.#filterCallbackMap.past(it) && !this.#filterCallbackMap.future(it),
     past: (it) => Date.parse(it.endDateTime) < Date.now(),
   };
 
@@ -25,7 +25,8 @@ class AppModel extends Model {
   #sortCallbackMap = {
     day: (a, b) => Date.parse(a.startDateTime) - Date.parse(b.startDateTime),
     event: () => 0,
-    time: (a, b) => AppModel.calcPointDuration(a) - AppModel.calcPointDuration(b),
+    time: (a, b) =>
+      AppModel.calcPointDuration(a) - AppModel.calcPointDuration(b),
     price: (a, b) => a.basePrice - b.basePrice,
     offers: () => 0,
   };
@@ -36,10 +37,23 @@ class AppModel extends Model {
    */
   getPoints(criteria = {}) {
     const adaptedPoint = this.#points.map(AppModel.adaptPointForClient);
-    const filterCallback = this.#filterCallbackMap[criteria.filter] ?? this.#filterCallbackMap.everything;
-    const sortCallback = this.#sortCallbackMap[criteria.sort] ?? this.#sortCallbackMap.day;
+    const filterCallback =
+      this.#filterCallbackMap[criteria.filter] ??
+      this.#filterCallbackMap.everything;
+    const sortCallback =
+      this.#sortCallbackMap[criteria.sort] ?? this.#sortCallbackMap.day;
 
     return adaptedPoint.filter(filterCallback).sort(sortCallback);
+  }
+
+  /**
+   * @param {Point} point
+   */
+  updatePoint(point) {
+    const adaptedPoint = AppModel.adaptPointForServer(point);
+    const index = this.#points.findIndex((it) => it.id === adaptedPoint.id);
+
+    this.#points.splice(index, 1, adaptedPoint);
   }
 
   /**
@@ -79,6 +93,23 @@ class AppModel extends Model {
       basePrice: point.base_price,
       offerIds: point.offers,
       isFavorite: point.is_favorite,
+    };
+  }
+
+  /**
+   * @param {Point} point
+   * @return {PointInSnakeCase}
+   */
+  static adaptPointForServer(point) {
+    return {
+      'id': point.id,
+      'type': point.type,
+      'destination': point.destinationId,
+      'date_from': point.startDateTime,
+      'date_to': point.endDateTime,
+      'base_price': point.basePrice,
+      'offers': point.offerIds,
+      'is_favorite': point.isFavorite,
     };
   }
 }
