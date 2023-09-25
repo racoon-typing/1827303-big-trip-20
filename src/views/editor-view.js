@@ -18,6 +18,7 @@ class EditorView extends View {
     this.addEventListener('click', this.handleClick);
     this.addEventListener('input', this.handleInput);
     this.addEventListener('submit', this.handleSubmit);
+    this.addEventListener('reset', this.handleReset);
   }
 
   connectedCallback() {
@@ -69,6 +70,10 @@ class EditorView extends View {
     if (!actByDefault) {
       evt.preventDefault();
     }
+  }
+
+  handleReset() {
+    this.notify('delete');
   }
 
   /**
@@ -211,7 +216,6 @@ class EditorView extends View {
       </button>
     `;
   }
-
 
   /**
    * @return {SafeHtml}

@@ -92,6 +92,7 @@ class ListPresentor extends Presenter {
     this.view.addEventListener('favorite', this.handleViewFavorite.bind(this));
     this.view.addEventListener('edit', this.handleViewEdit.bind(this));
     this.view.addEventListener('safe', this.handleViewSafe.bind(this));
+    this.view.addEventListener('delete', this.handleViewDelete.bind(this));
   }
 
   /**
@@ -183,6 +184,18 @@ class ListPresentor extends Presenter {
 
     event.preventDefault();
     this.model.updatePoint(this.serealizePointViewState(point));
+    this.handleViewClose();
+  }
+
+  /**
+   * @param {CustomEvent<HTMLInputElement> & {target: EditorView}} event
+   */
+  handleViewDelete(event) {
+    const editor = event.target;
+    const point = editor.state;
+
+    event.preventDefault();
+    this.model.deletePoint(point.id);
     this.handleViewClose();
   }
 }
