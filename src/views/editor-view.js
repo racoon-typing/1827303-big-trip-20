@@ -1,6 +1,6 @@
 import './editor-view.css';
 import View from './view.js';
-import {createDatePickers, html} from '../utils.js';
+import { createDatePickers, html } from '../utils.js';
 
 /**
  * @extends {View<PointViewState>}
@@ -72,8 +72,16 @@ class EditorView extends View {
     }
   }
 
-  handleReset() {
-    this.notify('delete');
+  /**
+   * @param {Event} evt
+   */
+  handleReset(evt) {
+    const point = this.state;
+    const actByDefault = this.notify(point.isDraft ? 'close' : 'delete');
+
+    if (!actByDefault) {
+      evt.preventDefault();
+    }
   }
 
   /**
@@ -201,6 +209,14 @@ class EditorView extends View {
    * @return {SafeHtml}
    */
   createResetButtonHtml() {
+    const point = this.state;
+
+    if (point.isDraft) {
+      return html`
+        <button class="event__reset-btn" type="reset">Cancle</button>
+      `;
+    }
+
     return html`
       <button class="event__reset-btn" type="reset">Delete</button>
     `;
@@ -210,6 +226,12 @@ class EditorView extends View {
    * @return {SafeHtml}
    */
   createCloseButtonHtml() {
+    const point = this.state;
+
+    if (point.isDraft) {
+      return '';
+    }
+
     return html`
       <button class="event__rollup-btn" type="button">
         <span class="visually-hidden">Close event</span>
