@@ -4,6 +4,7 @@ import destination from '../data/destinations.json';
 import offerGroups from '../data/offers.json';
 
 class AppModel extends Model {
+  #apiService;
   #points = points;
   #destination = destination;
   #offerGroups = offerGroups;
@@ -30,6 +31,24 @@ class AppModel extends Model {
     price: (a, b) => a.basePrice - b.basePrice,
     offers: () => 0,
   };
+
+
+  /**
+   * @param {ApiService} apiService
+   */
+  constructor(apiService) {
+    super();
+
+    this.#apiService = apiService;
+  }
+
+  async load() {
+    const data = await Promise.all([
+      this.#apiService.getPoints(),
+      this.#apiService.getDestinations(),
+      this.#apiService.getOfferGroups(),
+    ]);
+  }
 
   /**
    * @param {{filter?: FilterType, sort?: SortType}} criteria

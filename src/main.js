@@ -16,13 +16,14 @@ import ListPresentor from './presenters/list-presentor.js';
 import PlaceholderPresenter from './presenters/placeholder-presenter.js';
 
 
-window.apiService = new ApiService({authorization: 'Basic eo0w590ik29839q'});
-const appModel = new AppModel();
+const apiService = new ApiService({authorization: 'Basic eo0w590ik29839q'});
+const appModel = new AppModel(apiService);
 
-
-new BriefPresenter(document.querySelector('brief-view'));
-new AddPresenter(document.querySelector('add-view'));
-new FilterPresentor(document.querySelector('filter-view'));
-new SortPresenter(document.querySelector('sort-view'));
-new ListPresentor(document.querySelector('list-view'), appModel);
-new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
+appModel.load().then(() => {
+  new BriefPresenter(document.querySelector('brief-view'));
+  new AddPresenter(document.querySelector('add-view'));
+  new FilterPresentor(document.querySelector('filter-view'));
+  new SortPresenter(document.querySelector('sort-view'));
+  new ListPresentor(document.querySelector('list-view'), appModel);
+  new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
+});
