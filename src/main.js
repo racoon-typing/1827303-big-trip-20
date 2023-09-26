@@ -5,6 +5,7 @@ import './views/sort-view.js';
 import './views/list-view.js';
 import './views/placeholder-view.js';
 
+import ApiService from './services/api-service.js';
 import AppModel from './models/app-model.js';
 
 import BriefPresenter from './presenters/brief-presenter.js';
@@ -15,6 +16,7 @@ import ListPresentor from './presenters/list-presentor.js';
 import PlaceholderPresenter from './presenters/placeholder-presenter.js';
 
 
+window.apiService = new ApiService({authorization: 'Basic eo0w590ik29839q'});
 const appModel = new AppModel();
 
 
