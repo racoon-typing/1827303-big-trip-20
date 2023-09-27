@@ -1,13 +1,22 @@
 import Model from './model.js';
-import points from '../data/points.json';
-import destination from '../data/destinations.json';
-import offerGroups from '../data/offers.json';
 
 class AppModel extends Model {
   #apiService;
-  #points = points;
-  #destination = destination;
-  #offerGroups = offerGroups;
+
+  /**
+   * @type {Array<PointInSnakeCase>}
+   */
+  #points;
+
+  /**
+   * @type {Array<Destination>}
+   */
+  #destination;
+
+  /**
+   * @type {Array<OfferGroup>}
+   */
+  #offerGroups;
 
   /**
    * @type {Record<FilterType, (it: Point) => Boolean>}
@@ -48,6 +57,14 @@ class AppModel extends Model {
       this.#apiService.getDestinations(),
       this.#apiService.getOfferGroups(),
     ]);
+
+    const [points, destinations, offerGroups] = data;
+
+    this.#points = points;
+    this.#destination = destinations;
+    this.#offerGroups = offerGroups;
+
+    console.log(data);
   }
 
   /**
@@ -105,7 +122,6 @@ class AppModel extends Model {
    * @return {Array<OfferGroup>}
    */
   getOfferGroups() {
-    // @ts-ignore
     return structuredClone(this.#offerGroups);
   }
 
