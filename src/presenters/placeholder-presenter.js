@@ -5,6 +5,16 @@ import Presenter from './presenter.js';
  */
 class PlaceholderPresenter extends Presenter {
   /**
+   * @type {Boolean}
+   */
+  isModelLoaded;
+
+  /**
+   * @type {Error}
+   */
+  isModelError;
+
+  /**
     * @type {Record<FilterType, string>}
     */
   textMap = {
@@ -16,19 +26,52 @@ class PlaceholderPresenter extends Presenter {
 
   /**
    * @override
-   * @returns {PlaceholderViewStateViewState}
+   * @returns {PlaceholderViewState}
    */
   createViewState() {
-    /**
-     * @type {UrlParams}
-     */
-    const urlParams = this.getUrlParams();
-    const points = this.model.getPoints(urlParams);
+    if (this.isModelLoaded) {
+      /**
+       * @type {UrlParams}
+       */
+      const urlParams = this.getUrlParams();
+      const points = this.model.getPoints(urlParams);
+
+      return {
+        text: this.textMap[urlParams.filter] ?? this.textMap.everything,
+        isHidden: points.length > 0,
+      };
+    }
+
+    if (this.isModelError) {
+      return {
+        text: String(this.isModelError),
+      };
+    }
 
     return {
-      text: this.textMap[urlParams.filter] ?? this.textMap.everything,
-      isHidden: points.length > 0,
+      text: 'Loading...'
     };
+  }
+
+  /**
+   * @override
+   */
+  addEventListeners() {
+    this.model.addEventListener('load', this.handleModelLoad.bind(this));
+    this.model.addEventListener('error', this.handleModelError.bind(this));
+  }
+
+  handleModelLoad() {
+    this.isModelLoaded = true;
+    this.updateView();
+  }
+
+  /**
+   * @param {CustomEvent<Error>} evt
+   */
+  handleModelError(evt) {
+    this.isModelError = evt.detail;
+    this.updateView();
   }
 }
 

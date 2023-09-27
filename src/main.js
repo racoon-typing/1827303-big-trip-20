@@ -18,6 +18,9 @@ import PlaceholderPresenter from './presenters/placeholder-presenter.js';
 
 const apiService = new ApiService({authorization: 'Basic eo0w590ik29839q'});
 const appModel = new AppModel(apiService);
+console.log(appModel);
+
+new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
 
 appModel.load().then(() => {
   new BriefPresenter(document.querySelector('brief-view'));
@@ -25,5 +28,4 @@ appModel.load().then(() => {
   new FilterPresentor(document.querySelector('filter-view'));
   new SortPresenter(document.querySelector('sort-view'));
   new ListPresentor(document.querySelector('list-view'), appModel);
-  new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
 });

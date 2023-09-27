@@ -87,9 +87,9 @@
  */
 
 /**
- * @typedef PlaceholderViewStateViewState
+ * @typedef PlaceholderViewState
  * @prop {string} text
- * @prop {Boolean} isHidden
+ * @prop {Boolean} [isHidden]
  */
 
 /**
