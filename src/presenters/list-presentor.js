@@ -133,12 +133,12 @@ class ListPresentor extends Presenter {
   /**
    * @param {CustomEvent & {target: CardView}} event
    */
-  handleViewFavorite(event) {
+  async handleViewFavorite(event) {
     const card = event.target;
     const point = card.state;
 
     point.isFavorite = !point.isFavorite;
-    this.model.updatePoint(this.serealizePointViewState(point));
+    await this.model.updatePoint(this.serealizePointViewState(point));
     card.render();
   }
 
@@ -193,16 +193,16 @@ class ListPresentor extends Presenter {
   /**
    * @param {CustomEvent<HTMLInputElement> & {target: EditorView}} event
    */
-  handleViewSafe(event) {
+  async handleViewSafe(event) {
     const editor = event.target;
     const point = editor.state;
 
     event.preventDefault();
 
     if (point.isDraft) {
-      this.model.addPoint(this.serealizePointViewState(point));
+      await this.model.addPoint(this.serealizePointViewState(point));
     } else {
-      this.model.updatePoint(this.serealizePointViewState(point));
+      await this.model.updatePoint(this.serealizePointViewState(point));
     }
 
     this.handleViewClose();
@@ -211,12 +211,12 @@ class ListPresentor extends Presenter {
   /**
    * @param {CustomEvent<HTMLInputElement> & {target: EditorView}} event
    */
-  handleViewDelete(event) {
+  async handleViewDelete(event) {
     const editor = event.target;
     const point = editor.state;
 
     event.preventDefault();
-    this.model.deletePoint(point.id);
+    await this.model.deletePoint(point.id);
     this.handleViewClose();
   }
 }

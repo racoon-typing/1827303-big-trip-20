@@ -18,7 +18,6 @@ import PlaceholderPresenter from './presenters/placeholder-presenter.js';
 
 const apiService = new ApiService({authorization: 'Basic eo0w590ik29839q'});
 const appModel = new AppModel(apiService);
-console.log(appModel);
 
 new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
 

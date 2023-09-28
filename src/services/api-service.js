@@ -29,7 +29,7 @@ class ApiService extends Service {
   async addPoint(point) {
     const response = await this.request('points', {
       method: 'POST',
-      headers: {'content-type': 'application/json'},
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify(point),
     });
 
@@ -43,11 +43,21 @@ class ApiService extends Service {
   async updatePoint(point) {
     const response = await this.request(`points/${point.id}`, {
       method: 'PUT',
-      headers: {'content-type': 'application/json'},
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify(point),
     });
 
     return response.json();
+  }
+
+  /**
+   * @param {string} id
+   * @return {Promise<void>}
+   */
+  async deletePoint(id) {
+    await this.request(`points/${id}`, {
+      method: 'DELETE',
+    });
   }
 
   /**
