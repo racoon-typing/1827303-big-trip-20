@@ -9,7 +9,7 @@ class ListPresentor extends Presenter {
   /**
    * @override
    * @return {ListViewState}
-   */
+  */
   createViewState() {
     /**
      * @type {UrlParams}
