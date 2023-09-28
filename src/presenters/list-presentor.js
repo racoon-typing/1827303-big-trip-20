@@ -137,9 +137,14 @@ class ListPresentor extends Presenter {
     const card = event.target;
     const point = card.state;
 
-    point.isFavorite = !point.isFavorite;
-    await this.model.updatePoint(this.serealizePointViewState(point));
-    card.render();
+    try {
+      point.isFavorite = !point.isFavorite;
+      await this.model.updatePoint(this.serealizePointViewState(point));
+      card.render();
+
+    } catch {
+      card.shake();
+    }
   }
 
   /**
@@ -197,17 +202,23 @@ class ListPresentor extends Presenter {
     const editor = event.target;
     const point = editor.state;
 
-    event.preventDefault();
-    point.isSaving = true;
-    editor.renderSubmitButton();
+    try {
+      event.preventDefault();
+      point.isSaving = true;
+      editor.renderSubmitButton();
 
-    if (point.isDraft) {
-      await this.model.addPoint(this.serealizePointViewState(point));
-    } else {
-      await this.model.updatePoint(this.serealizePointViewState(point));
+      if (point.isDraft) {
+        await this.model.addPoint(this.serealizePointViewState(point));
+      } else {
+        await this.model.updatePoint(this.serealizePointViewState(point));
+      }
+      this.handleViewClose();
+
+    } catch {
+      point.isSaving = false;
+      editor.renderSubmitButton();
+      editor.shake();
     }
-
-    this.handleViewClose();
   }
 
   /**
@@ -217,12 +228,19 @@ class ListPresentor extends Presenter {
     const editor = event.target;
     const point = editor.state;
 
-    event.preventDefault();
-    point.isDeleting = true;
-    editor.renderResetButton();
+    try {
+      event.preventDefault();
+      point.isDeleting = true;
+      editor.renderResetButton();
 
-    await this.model.deletePoint(point.id);
-    this.handleViewClose();
+      await this.model.deletePoint(point.id);
+      this.handleViewClose();
+
+    } catch {
+      point.isDeleting = false;
+      editor.renderResetButton();
+      editor.shake();
+    }
   }
 }
 
