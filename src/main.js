@@ -4,6 +4,8 @@ import './views/filter-view.js';
 import './views/sort-view.js';
 import './views/list-view.js';
 import './views/placeholder-view.js';
+import './views/overlay-view.js';
+
 
 import ApiService from './services/api-service.js';
 import AppModel from './models/app-model.js';

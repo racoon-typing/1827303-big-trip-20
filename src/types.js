@@ -14,6 +14,7 @@
  * @typedef {import('./views/list-view.js').default} ListView
  * @typedef {import('./views/card-view.js').default} CardView
  * @typedef {import('./views/placeholder-view.js').default} PlaceholderView
+ * @typedef {import('./views/overlay-view.js').default} OverlayView
  * @typedef {import('./views/view.js').default} View
  */
 
@@ -92,6 +93,11 @@
  * @typedef PlaceholderViewState
  * @prop {string} text
  * @prop {Boolean} [isHidden]
+ */
+
+/**
+ * @typedef OverLayViewState
+ * @prop {boolean} isActive
  */
 
 /**
