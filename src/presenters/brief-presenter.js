@@ -21,7 +21,20 @@ class BriefPresenter extends Presenter {
    * @return {string}
    */
   getPlaces() {
-    return 'Amsterdam — Chamonix — Geneva';
+    const points = this.model.getPoints();
+    const destinations = this.model.getDestinations();
+
+    const names = points.map((point) => {
+      const destination = destinations.find((it) => it.id === point.destinationId);
+
+      return destination.name;
+    });
+
+    if (names.length > 3) {
+      names.splice(1, names.length - 2, '...');
+    }
+
+    return names.join(' – ');
   }
 
   /**
@@ -41,10 +54,25 @@ class BriefPresenter extends Presenter {
   }
 
   /**
-   * @return {string}
+   * @return {number}
    */
   getCost() {
-    return '1230';
+    const points = this.model.getPoints();
+    const offerGroups = this.model.getOfferGroups();
+
+    return points.reduce((totalCost, point) => {
+      const {offers} = offerGroups.find((it) => it.type === point.type);
+
+      const pointCost = offers.reduce((cost, offer) => {
+        if (point.offerIds.includes(offer.id)) {
+          return cost + offer.price;
+        } else {
+          return cost;
+        }
+      }, point.basePrice);
+
+      return totalCost + pointCost;
+    }, 0);
   }
 }
 
