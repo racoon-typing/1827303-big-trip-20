@@ -17,7 +17,7 @@ import ListPresentor from './presenters/list-presentor.js';
 import PlaceholderPresenter from './presenters/placeholder-presenter.js';
 import OverlayPresenter from './presenters/overlay-presenter.js';
 
-const apiService = new ApiService({authorization: 'Basic eo0w590ik29839q'});
+const apiService = new ApiService({authorization: 'Basic eo2w590ik29839q'});
 const appModel = new AppModel(apiService);
 
 new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
@@ -25,8 +25,8 @@ new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
 appModel.load().then(() => {
   new BriefPresenter(document.querySelector('brief-view'));
   new AddPresenter(document.querySelector('add-view'));
-  new FilterPresentor(document.querySelector('filter-view'));
-  new SortPresenter(document.querySelector('sort-view'));
+  new FilterPresentor(document.querySelector('filter-view'), appModel);
+  new SortPresenter(document.querySelector('sort-view'), appModel);
   new ListPresentor(document.querySelector('list-view'), appModel);
   new OverlayPresenter(document.querySelector('overlay-view'), appModel);
 });

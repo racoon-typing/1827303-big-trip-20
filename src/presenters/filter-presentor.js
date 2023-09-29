@@ -1,7 +1,7 @@
 import Presenter from './presenter.js';
 
 /**
- * @extends {Presenter<FilterView>}
+ * @extends {Presenter<FilterView, AppModel>}
  */
 class FilterPresentor extends Presenter {
   /**
@@ -22,7 +22,7 @@ class FilterPresentor extends Presenter {
     const items = types.map((it) => ({
       value: it,
       isSelected: it === filter,
-      isDisabled: it === 'past',
+      isDisabled: this.model.getPoints({filter: it}).length === 0,
     }));
 
     return {items};
