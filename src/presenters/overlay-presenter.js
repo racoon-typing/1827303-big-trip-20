@@ -19,6 +19,9 @@ class OverlayPresenter extends Presenter {
     };
   }
 
+  /**
+   * @override
+   */
   addEventListeners() {
     this.model.addEventListener('busy', this.handleModelBusy.bind(this));
     this.model.addEventListener('idle', this.handleModelIdle.bind(this));

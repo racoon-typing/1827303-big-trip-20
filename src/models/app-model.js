@@ -99,6 +99,7 @@ class AppModel extends Model {
       const addedPoint = await this.#apiService.addPoint(adaptedPoint);
 
       this.#points.push(addedPoint);
+      this.notify('change');
 
     } finally {
       this.notify('idle');
@@ -117,6 +118,7 @@ class AppModel extends Model {
       const index = this.#points.findIndex((it) => it.id === adaptedPoint.id);
 
       this.#points.splice(index, 1, updatedPoint);
+      this.notify('change');
 
     } finally {
       this.notify('idle');
@@ -134,6 +136,7 @@ class AppModel extends Model {
       const index = this.#points.findIndex((it) => it.id === id);
 
       this.#points.splice(index, 1);
+      this.notify('change');
 
     } finally {
       this.notify('idle');
